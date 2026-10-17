@@ -6,7 +6,6 @@ import pandas as pd
 
 from app.parsers.base import BaseQuotationParser, RawFileContent, RawSheet
 
-PREVIEW_ROWS = 50
 ENCODINGS = ("utf-8-sig", "gbk", "latin-1")
 
 
@@ -32,11 +31,6 @@ class CsvQuotationParser(BaseQuotationParser):
             columns = [str(c).strip() for c in df.columns]
             rows = df.where(df.notna(), None).values.tolist()
             result.sheets.append(
-                RawSheet(
-                    name="csv",
-                    columns=columns,
-                    row_count=len(rows),
-                    preview_rows=rows[:PREVIEW_ROWS],
-                )
+                RawSheet(name="csv", columns=columns, row_count=len(rows), rows=rows)
             )
         return result

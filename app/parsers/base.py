@@ -15,9 +15,7 @@ class RawSheet(BaseModel):
     name: str = Field(..., description="工作表名 / 页码 / 数据块名")
     columns: list[str] = Field(default_factory=list, description="表头（空表可为空列表）")
     row_count: int = Field(0, ge=0, description="数据行总数（不含表头）")
-    preview_rows: list[list] = Field(
-        default_factory=list, description="前 N 行原始数据（预览用，不含表头）"
-    )
+    rows: list[list] = Field(default_factory=list, description="全部数据行（不含表头）")
 
 
 class RawFileContent(BaseModel):
@@ -41,7 +39,7 @@ class RawFileContent(BaseModel):
                     "name": s.name,
                     "columns": s.columns,
                     "row_count": s.row_count,
-                    "preview_rows": s.preview_rows[:max_rows],
+                    "preview_rows": s.rows[:max_rows],
                 }
                 for s in self.sheets
             ],

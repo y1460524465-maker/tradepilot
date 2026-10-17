@@ -7,8 +7,11 @@
 from datetime import date
 from decimal import Decimal
 from enum import Enum
+from uuid import UUID
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, field_validator
+
+from app.models.quotation_item import ExtractionMethod, ReviewStatus
 
 
 class CurrencyCode(str, Enum):
@@ -21,24 +24,8 @@ class CurrencyCode(str, Enum):
     HKD = "HKD"
 
 
-class ReviewStatus(str, Enum):
-    """审核状态（TRD 3.2 / 8.2：不确定的数据必须标记，不得静默放行）。"""
-
-    PENDING_REVIEW = "pending_review"
-    CONFIRMED = "confirmed"
-    REJECTED = "rejected"
-
-
-class ExtractionMethod(str, Enum):
-    """提取方式，用于来源追溯（TRD 5.1 / 7.3）。"""
-
-    RULE = "rule"        # 规则/结构化读取（表头映射等）
-    AI = "ai"            # 大模型辅助提取
-    MANUAL = "manual"    # 人工录入/人工修正
-
-
 class QuotationItemBase(BaseModel):
-    """报价明细的统一结构。必需字段缺失会直接校验失败。"""
+    """报价明细的统一结构（人工录入契约：必需字段缺失直接校验失败）。"""
 
     supplier_name: str = Field(..., min_length=1, description="供应商名称")
     product_name: str = Field(..., min_length=1, description="产品名称")
@@ -57,22 +44,69 @@ class QuotationItemBase(BaseModel):
 
 
 class QuotationItemCreate(QuotationItemBase):
-    """解析/提取流程提交报价明细时的负载。"""
+    """人工录入/修正报价明细时的负载。"""
 
     extraction_method: ExtractionMethod = ExtractionMethod.RULE
-    source_file_id: str | None = Field(None, description="来源文件 ID")
+    source_file_id: UUID | None = Field(None, description="来源文件 ID")
     source_reference: dict | None = Field(
         None, description="来源追溯：工作表、页码、行号、原始文本片段等"
     )
 
 
-class QuotationItemRead(QuotationItemBase):
+class QuotationItemUpdate(BaseModel):
+    """人工审核修正（TRD 第十一章）：只更新提供的字段。"""
+
+    supplier_name: str | None = Field(None, min_length=1)
+    product_name: str | None = Field(None, min_length=1)
+    model: str | None = None
+    specification: str | None = None
+    quantity: Decimal | None = Field(None, gt=0)
+    unit: str | None = None
+    unit_price: Decimal | None = Field(None, gt=0)
+    currency: CurrencyCode | None = None
+    tax_rate: Decimal | None = Field(None, ge=0, le=1)
+    shipping_cost: Decimal | None = Field(None, ge=0)
+    moq: Decimal | None = Field(None, ge=0)
+    lead_time_days: int | None = Field(None, ge=0)
+    payment_terms: str | None = None
+    valid_until: date | None = None
+    review_status: ReviewStatus | None = None
+
+    @field_validator("supplier_name", "product_name")
+    @classmethod
+    def not_blank(cls, v: str | None) -> str | None:
+        if v is not None and not v.strip():
+            raise ValueError("不能为空白")
+        return v.strip() if v is not None else None
+
+
+class QuotationItemRead(BaseModel):
     """返回给前端的报价明细。"""
 
     model_config = ConfigDict(from_attributes=True)
 
-    id: str
-    review_status: ReviewStatus = ReviewStatus.PENDING_REVIEW
-    extraction_method: ExtractionMethod = ExtractionMethod.RULE
-    source_file_id: str | None = None
+    id: UUID
+    task_id: UUID | None = None
+    source_file_id: UUID | None = None
+    supplier_name: str | None = None
+    product_name: str | None = None
+    model: str | None = None
+    specification: str | None = None
+    quantity: Decimal | None = None
+    unit: str | None = None
+    unit_price: Decimal | None = None
+    currency: str | None = None
+    tax_rate: Decimal | None = None
+    shipping_cost: Decimal | None = None
+    moq: Decimal | None = None
+    lead_time_days: int | None = None
+    payment_terms: str | None = None
+    valid_until: date | None = None
     source_reference: dict | None = None
+    extraction_method: ExtractionMethod = ExtractionMethod.RULE
+    review_status: ReviewStatus = ReviewStatus.PENDING_REVIEW
+
+
+class ItemList(BaseModel):
+    total: int
+    items: list[QuotationItemRead]

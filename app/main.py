@@ -5,7 +5,7 @@
 
 from fastapi import FastAPI
 
-from app.api.v1 import files, health, tasks
+from app.api.v1 import files, health, items, tasks
 from app.core.config import settings
 
 app = FastAPI(
@@ -18,3 +18,4 @@ app = FastAPI(
 app.include_router(health.router, prefix="/api/v1")
 app.include_router(tasks.router, prefix="/api/v1")
 app.include_router(files.router, prefix="/api/v1")
+app.include_router(items.router, prefix="/api/v1")

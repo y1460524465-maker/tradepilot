@@ -6,7 +6,6 @@ import pandas as pd
 
 from app.parsers.base import BaseQuotationParser, RawFileContent, RawSheet
 
-PREVIEW_ROWS = 50
 
 
 class ExcelQuotationParser(BaseQuotationParser):
@@ -26,11 +25,6 @@ class ExcelQuotationParser(BaseQuotationParser):
             columns = [str(c).strip() for c in df.columns]
             rows = df.where(df.notna(), None).values.tolist()
             result.sheets.append(
-                RawSheet(
-                    name=str(name),
-                    columns=columns,
-                    row_count=len(rows),
-                    preview_rows=rows[:PREVIEW_ROWS],
-                )
+                RawSheet(name=str(name), columns=columns, row_count=len(rows), rows=rows)
             )
         return result

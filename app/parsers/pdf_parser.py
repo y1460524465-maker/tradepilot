@@ -9,7 +9,6 @@ import fitz  # PyMuPDF
 
 from app.parsers.base import BaseQuotationParser, RawFileContent, RawSheet
 
-PREVIEW_ROWS = 50
 
 
 class PdfQuotationParser(BaseQuotationParser):
@@ -33,7 +32,7 @@ class PdfQuotationParser(BaseQuotationParser):
                                 name=f"第{page_number}页-表{t_index}",
                                 columns=header,
                                 row_count=len(rows),
-                                preview_rows=rows[:PREVIEW_ROWS],
+                                rows=rows,
                             )
                         )
                 else:
@@ -43,7 +42,7 @@ class PdfQuotationParser(BaseQuotationParser):
                         RawSheet(
                             name=f"第{page_number}页-文本",
                             row_count=len(lines),
-                            preview_rows=[[ln] for ln in lines[:PREVIEW_ROWS]],
+                            rows=[[ln] for ln in lines],
                         )
                     )
                     if page_number == 1 and not lines:
