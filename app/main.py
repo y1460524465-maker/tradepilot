@@ -7,6 +7,7 @@ from pathlib import Path
 
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
+from starlette.responses import Response
 
 from app.api.v1 import ai, files, health, items, matching, review, tasks
 from app.core.config import settings
@@ -26,7 +27,32 @@ app.include_router(matching.router, prefix="/api/v1")
 app.include_router(ai.router, prefix="/api/v1")
 app.include_router(review.router, prefix="/api/v1")
 
+
+class WebStaticFiles(StaticFiles):
+    """修正 Windows 下 mimetypes 把 .js 判成 text/plain 的问题。
+
+    浏览器对 ES Module 的 MIME 有严格校验，text/plain 会被直接拒绝执行，
+    页面表现为白屏。这里按扩展名强制正确的 Content-Type。
+    """
+
+    FORCE_TYPES = {
+        ".js": "application/javascript",
+        ".mjs": "application/javascript",
+        ".css": "text/css",
+        ".svg": "image/svg+xml",
+        ".json": "application/json",
+    }
+
+    def file_response(self, full_path, stat_result, scope, status_code=200):  # noqa: ANN001, ANN201
+        response = super().file_response(full_path, stat_result, scope, status_code)
+        if isinstance(response, Response):
+            forced = self.FORCE_TYPES.get(Path(str(full_path)).suffix.lower())
+            if forced:
+                response.headers["content-type"] = forced
+        return response
+
+
 # 前端构建产物（阶段八）：存在则由后端直接托管，单服务即可使用完整系统
 _frontend_dist = Path(__file__).resolve().parent.parent / "frontend" / "dist"
 if _frontend_dist.is_dir():
-    app.mount("/", StaticFiles(directory=_frontend_dist, html=True), name="frontend")
+    app.mount("/", WebStaticFiles(directory=_frontend_dist, html=True), name="frontend")
