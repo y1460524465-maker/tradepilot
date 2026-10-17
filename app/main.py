@@ -5,7 +5,7 @@
 
 from fastapi import FastAPI
 
-from app.api.v1 import health
+from app.api.v1 import health, tasks
 from app.core.config import settings
 
 app = FastAPI(
@@ -16,3 +16,4 @@ app = FastAPI(
 
 # 统一接口前缀：/api/v1（TRD 第十三章）
 app.include_router(health.router, prefix="/api/v1")
+app.include_router(tasks.router, prefix="/api/v1")
