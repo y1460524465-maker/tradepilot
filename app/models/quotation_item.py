@@ -54,6 +54,10 @@ class QuotationItem(Base):
     source_file_id: Mapped[uuid.UUID | None] = mapped_column(
         Uuid, ForeignKey("uploaded_files.id"), nullable=True, index=True
     )
+    # 所属可比组（阶段五匹配结果；未匹配为 None）
+    match_id: Mapped[uuid.UUID | None] = mapped_column(
+        Uuid, ForeignKey("product_matches.id"), nullable=True, index=True
+    )
 
     supplier_name: Mapped[str | None] = mapped_column(String(200), nullable=True)
     product_name: Mapped[str | None] = mapped_column(String(500), nullable=True)
