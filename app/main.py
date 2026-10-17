@@ -30,10 +30,12 @@ app.include_router(review.router, prefix="/api/v1")
 
 
 class WebStaticFiles(StaticFiles):
-    """修正 Windows 下 mimetypes 把 .js 判成 text/plain 的问题。
+    """修正 Windows 下 mimetypes 把 .js 判成 text/plain 的问题，并设置缓存策略。
 
-    浏览器对 ES Module 的 MIME 有严格校验，text/plain 会被直接拒绝执行，
-    页面表现为白屏。这里按扩展名强制正确的 Content-Type。
+    1. 浏览器对 ES Module 的 MIME 有严格校验，text/plain 会被直接拒绝执行，
+       页面表现为白屏。这里按扩展名强制正确的 Content-Type。
+    2. 缓存策略：index.html 用 no-cache（每次向服务器校验，发版即生效）；
+       /assets/* 文件名带内容哈希，用一年长缓存 + immutable。
     """
 
     FORCE_TYPES = {
@@ -47,9 +49,14 @@ class WebStaticFiles(StaticFiles):
     def file_response(self, full_path, stat_result, scope, status_code=200):  # noqa: ANN001, ANN201
         response = super().file_response(full_path, stat_result, scope, status_code)
         if isinstance(response, Response):
-            forced = self.FORCE_TYPES.get(Path(str(full_path)).suffix.lower())
+            p = Path(str(full_path))
+            forced = self.FORCE_TYPES.get(p.suffix.lower())
             if forced:
                 response.headers["content-type"] = forced
+            if p.suffix.lower() == ".html" or p.name == "index.html":
+                response.headers["cache-control"] = "no-cache"
+            elif p.parent.name == "assets":
+                response.headers["cache-control"] = "public, max-age=31536000, immutable"
         return response
 
 
