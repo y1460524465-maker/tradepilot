@@ -51,30 +51,46 @@ onMounted(load)
 </script>
 
 <template>
-  <div class="card">
+  <!-- 新建任务 -->
+  <section class="card reveal" style="--i: 1">
+    <div class="section-head">
+      <span class="no">00 / NEW</span>
+      <h2>新建比价任务</h2>
+    </div>
     <div class="row">
-      <input v-model="newName" type="text" placeholder="新建比价任务名称，如：10月紧固件比价"
-             @keyup.enter="create" style="flex:1; min-width:240px" />
+      <input v-model="newName" type="text" placeholder="任务名称，如：10 月紧固件比价"
+             style="flex: 1; min-width: 240px" @keyup.enter="create" />
       <button class="btn" :disabled="creating" @click="create">创建任务</button>
     </div>
-    <p v-if="error" class="muted" style="color: var(--bad)">{{ error }}</p>
-  </div>
+    <p v-if="error" class="muted" style="color: var(--red-text); margin-bottom: 0">{{ error }}</p>
+  </section>
 
-  <div class="card">
-    <h2 style="margin-top:0">比价任务</h2>
-    <table>
+  <!-- 任务列表 -->
+  <section class="card reveal" style="--i: 2">
+    <div class="section-head">
+      <span class="no">01 / TASKS</span>
+      <h2>比价任务</h2>
+      <span class="meta-mono" style="margin-left: auto">{{ tasks.length }} 项</span>
+    </div>
+
+    <div v-if="!tasks.length" class="empty">
+      还没有任务 —— 输入名称，创建第一个比价任务
+    </div>
+
+    <table v-else>
       <thead>
         <tr><th>任务名称</th><th>状态</th><th>创建时间</th><th></th></tr>
       </thead>
       <tbody>
-        <tr v-if="!tasks.length"><td colspan="4" class="muted">还没有任务，先创建一个</td></tr>
-        <tr v-for="t in tasks" :key="t.id">
-          <td>{{ t.task_name }}</td>
+        <tr v-for="(t, i) in tasks" :key="t.id" class="reveal" :style="{ '--i': i }">
+          <td style="color: var(--ink)">{{ t.task_name }}</td>
           <td><span class="tag" :class="statusTag[t.status]">{{ statusText[t.status] || t.status }}</span></td>
-          <td class="muted">{{ (t.created_at || '').replace('T', ' ').slice(0, 16) }}</td>
-          <td><button class="btn ghost" @click="emit('open', t.id)">进入</button></td>
+          <td class="meta-mono">{{ (t.created_at || '').replace('T', ' ').slice(0, 16) }}</td>
+          <td style="text-align: right">
+            <button class="btn ghost" @click="emit('open', t.id)">打开</button>
+          </td>
         </tr>
       </tbody>
     </table>
-  </div>
+  </section>
 </template>
