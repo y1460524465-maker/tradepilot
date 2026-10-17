@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+*.egg-info/
+
+# 测试与工具缓存
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# 环境变量与密钥（真实 .env 不入库）
+.env
+.env.local
+
+# TradePilot 运行数据
+storage/uploads/
+storage/exports/
+
+# IDE
+.idea/
+.vscode/
