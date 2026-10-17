@@ -22,3 +22,7 @@ storage/exports/
 # IDE
 .idea/
 .vscode/
+
+# 前端（Node）
+frontend/node_modules/
+frontend/dist/
