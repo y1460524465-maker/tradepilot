@@ -21,5 +21,10 @@ class Settings(BaseSettings):
     # 阶段二启用：PostgreSQL 连接串
     database_url: str = "postgresql+psycopg://tradepilot:tradepilot@localhost:5432/tradepilot"
 
+    # 文件存储（TRD 第六章）
+    storage_dir: str = "storage"
+    max_upload_size_mb: int = 20      # 单文件上限（TRD 6.3 示例值）
+    max_files_per_task: int = 20      # 单任务文件数上限
+
 
 settings = Settings()
