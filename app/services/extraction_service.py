@@ -11,12 +11,12 @@ from pathlib import Path
 from sqlalchemy import delete, select
 from sqlalchemy.orm import Session
 
-from app.models.quotation_item import ExtractionMethod, QuotationItem, ReviewStatus
-from app.models.uploaded_file import FileStatus, UploadedFile
-from app.parsers import registry
-from app.services import normalization
-from app.services.field_mapping import map_headers
-from app.services.file_service import FileService
+from tradepilot.app.models.quotation_item import ExtractionMethod, QuotationItem, ReviewStatus
+from tradepilot.app.models.uploaded_file import FileStatus, UploadedFile
+from tradepilot.app.parsers import registry
+from tradepilot.app.services import normalization
+from tradepilot.app.services.field_mapping import map_headers
+from tradepilot.app.services.file_service import FileService
 
 
 class FileExtractionResult:

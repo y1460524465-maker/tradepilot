@@ -1,5 +1,5 @@
-from app.ai.ai_extraction_service import AIExtractionService, AIItem
-from app.ai.provider import DeepSeekProvider, MockProvider, get_provider
+from tradepilot.app.ai.ai_extraction_service import AIExtractionService, AIItem
+from tradepilot.app.ai.provider import DeepSeekProvider, MockProvider, get_provider
 
 __all__ = [
     "AIExtractionService",

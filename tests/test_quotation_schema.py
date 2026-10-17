@@ -6,7 +6,7 @@ from decimal import Decimal
 import pytest
 from pydantic import ValidationError
 
-from app.schemas.quotation import (
+from tradepilot.app.schemas.quotation import (
     CurrencyCode,
     ExtractionMethod,
     QuotationItemCreate,

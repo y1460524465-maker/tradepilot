@@ -12,7 +12,7 @@ from datetime import datetime
 from sqlalchemy import JSON, DateTime, Enum, ForeignKey, Integer, String, Text, Uuid, func
 from sqlalchemy.orm import Mapped, mapped_column
 
-from app.db.base import Base
+from tradepilot.app.db.base import Base
 
 
 class MatchType(str, enum.Enum):

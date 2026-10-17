@@ -5,9 +5,9 @@ import uuid
 from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
 
-from app.models.comparison_task import ComparisonTask
-from app.repositories.task_repository import TaskRepository
-from app.schemas.task import TaskCreate
+from tradepilot.app.models.comparison_task import ComparisonTask
+from tradepilot.app.repositories.task_repository import TaskRepository
+from tradepilot.app.schemas.task import TaskCreate
 
 
 class TaskService:

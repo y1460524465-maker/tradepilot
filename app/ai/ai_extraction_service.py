@@ -15,13 +15,13 @@ from pydantic import BaseModel, Field, ValidationError
 from sqlalchemy import delete, select
 from sqlalchemy.orm import Session
 
-from app.ai import provider as ai_provider_module
-from app.core.config import settings
-from app.models.quotation_item import ExtractionMethod, QuotationItem, ReviewStatus
-from app.models.uploaded_file import FileStatus, UploadedFile
-from app.parsers import registry
-from app.services import normalization
-from app.services.file_service import FileService
+from tradepilot.app.ai import provider as ai_provider_module
+from tradepilot.app.core.config import settings
+from tradepilot.app.models.quotation_item import ExtractionMethod, QuotationItem, ReviewStatus
+from tradepilot.app.models.uploaded_file import FileStatus, UploadedFile
+from tradepilot.app.parsers import registry
+from tradepilot.app.services import normalization
+from tradepilot.app.services.file_service import FileService
 
 SYSTEM_PROMPT = """你是报价单字段提取助手。从给定的报价文本中提取每一行报价信息。
 只输出 JSON，格式：

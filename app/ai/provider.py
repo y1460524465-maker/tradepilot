@@ -9,7 +9,7 @@ from typing import Protocol
 
 import httpx
 
-from app.core.config import settings
+from tradepilot.app.core.config import settings
 
 
 class AIProvider(Protocol):

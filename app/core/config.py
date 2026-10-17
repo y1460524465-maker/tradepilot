@@ -4,12 +4,17 @@
 数据库密码、模型 API Key 等敏感信息不得写入源代码（TRD 15.2）。
 """
 
+from pathlib import Path
+
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+# 项目根目录（tradepilot/）：无论从哪个 cwd 启动，.env 和存储目录都锚定到这里
+_PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
-        env_file=".env",
+        env_file=str(_PROJECT_ROOT / ".env"),
         env_file_encoding="utf-8",
         extra="ignore",
     )
@@ -21,8 +26,8 @@ class Settings(BaseSettings):
     # 阶段二启用：PostgreSQL 连接串
     database_url: str = "postgresql+psycopg://tradepilot:tradepilot@localhost:5432/tradepilot"
 
-    # 文件存储（TRD 第六章）
-    storage_dir: str = "storage"
+    # 文件存储（TRD 第六章）：默认锚定项目根目录，不受启动 cwd 影响
+    storage_dir: str = str(_PROJECT_ROOT / "storage")
     max_upload_size_mb: int = 20      # 单文件上限（TRD 6.3 示例值）
     max_files_per_task: int = 20      # 单任务文件数上限
 

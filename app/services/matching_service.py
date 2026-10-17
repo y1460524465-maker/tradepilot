@@ -19,8 +19,8 @@ from difflib import SequenceMatcher
 from sqlalchemy import delete, select
 from sqlalchemy.orm import Session
 
-from app.models.product_match import MatchStatus, MatchType, ProductMatch
-from app.models.quotation_item import QuotationItem
+from tradepilot.app.models.product_match import MatchStatus, MatchType, ProductMatch
+from tradepilot.app.models.quotation_item import QuotationItem
 
 # 模糊匹配的相似度门槛（保守值，只用于生成"疑似"提示）
 FUZZY_THRESHOLD = 0.85

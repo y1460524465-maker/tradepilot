@@ -15,10 +15,10 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import StaticPool
 
-from app.core.config import settings
-from app.db.base import Base
-from app.db.session import get_db
-from app.main import app
+from tradepilot.app.core.config import settings
+from tradepilot.app.db.base import Base
+from tradepilot.app.db.session import get_db
+from tradepilot.app.main import app
 
 
 @pytest.fixture()

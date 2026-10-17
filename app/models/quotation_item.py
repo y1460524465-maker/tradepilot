@@ -25,7 +25,7 @@ from sqlalchemy import (
 )
 from sqlalchemy.orm import Mapped, mapped_column
 
-from app.db.base import Base
+from tradepilot.app.db.base import Base
 
 
 class ExtractionMethod(str, enum.Enum):

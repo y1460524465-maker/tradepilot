@@ -5,7 +5,7 @@ from decimal import Decimal
 
 from pydantic import BaseModel, ConfigDict
 
-from app.services.comparison_service import Comparability
+from tradepilot.app.services.comparison_service import Comparability
 
 
 class MatchRunSummary(BaseModel):

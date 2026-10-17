@@ -18,22 +18,27 @@ AI 报价处理与供应商比价系统（MVP）。技术栈与业务规则依�
 
 ## 本地开发
 
+> 导入风格：代码统一使用 `tradepilot.app.*` 包导入，所有命令在**工作区根目录** `E:\TradePilot(workbdy)` 下执行。
+
 ```bash
-# 1. 数据库
-docker compose up -d
+# 1. 数据库（在 tradepilot/ 目录下）
+cd tradepilot && docker compose up -d && cd ..
 
 # 2. 后端（首次先建虚拟环境装依赖）
+cd tradepilot
 python -m venv .venv
 .venv\Scripts\python -m pip install -r requirements.txt
 .venv\Scripts\python -m alembic upgrade head     # 数据库迁移
-.venv\Scripts\python -m uvicorn app.main:app --reload
+cd ..
+tradepilot\.venv\Scripts\python -m uvicorn tradepilot.app.main:app --reload
 
 # 3. 前端（可选：构建后由后端直接托管，无需单独起服务）
-cd frontend
+cd tradepilot\frontend
 npm install
 npm run build
 
-# 4. 测试
+# 4. 测试（在 tradepilot/ 目录下，pytest.ini 已配置 pythonpath=..）
+cd ..\tradepilot
 .venv\Scripts\python -m pytest
 ```
 

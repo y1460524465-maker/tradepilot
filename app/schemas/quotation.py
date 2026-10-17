@@ -11,7 +11,7 @@ from uuid import UUID
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
-from app.models.quotation_item import ExtractionMethod, ReviewStatus
+from tradepilot.app.models.quotation_item import ExtractionMethod, ReviewStatus
 
 
 class CurrencyCode(str, Enum):

@@ -14,10 +14,10 @@ import fastapi
 from fastapi import HTTPException, UploadFile, status
 from sqlalchemy.orm import Session
 
-from app.core.config import settings
-from app.models.uploaded_file import FileStatus, FileTypeEnum, UploadedFile
-from app.parsers import registry
-from app.services.task_service import TaskService
+from tradepilot.app.core.config import settings
+from tradepilot.app.models.uploaded_file import FileStatus, FileTypeEnum, UploadedFile
+from tradepilot.app.parsers import registry
+from tradepilot.app.services.task_service import TaskService
 
 # 扩展名白名单（TRD 6.1：.xlsx、.csv、文本型 .pdf）
 EXTENSION_MAP: dict[str, FileTypeEnum] = {

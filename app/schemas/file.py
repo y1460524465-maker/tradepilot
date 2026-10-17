@@ -5,7 +5,7 @@ from datetime import datetime
 
 from pydantic import BaseModel, ConfigDict
 
-from app.models.uploaded_file import FileStatus, FileTypeEnum
+from tradepilot.app.models.uploaded_file import FileStatus, FileTypeEnum
 
 
 class FileRead(BaseModel):

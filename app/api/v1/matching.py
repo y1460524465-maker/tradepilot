@@ -6,18 +6,18 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
-from app.db.session import get_db
-from app.models.comparison_task import ComparisonTask
-from app.models.product_match import MatchStatus, ProductMatch
-from app.models.quotation_item import QuotationItem
-from app.schemas.matching import (
+from tradepilot.app.db.session import get_db
+from tradepilot.app.models.comparison_task import ComparisonTask
+from tradepilot.app.models.product_match import MatchStatus, ProductMatch
+from tradepilot.app.models.quotation_item import QuotationItem
+from tradepilot.app.schemas.matching import (
     ComparisonReport,
     GroupComparisonRead,
     MatchRunSummary,
     MatchStatusUpdate,
 )
-from app.services.comparison_service import Comparability, compute_group, compute_task
-from app.services.matching_service import MatchingService
+from tradepilot.app.services.comparison_service import Comparability, compute_group, compute_task
+from tradepilot.app.services.matching_service import MatchingService
 
 router = APIRouter(tags=["matching"])
 

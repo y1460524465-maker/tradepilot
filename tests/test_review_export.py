@@ -6,7 +6,7 @@ from decimal import Decimal
 
 import openpyxl
 
-from app.models.quotation_item import QuotationItem, ReviewStatus
+from tradepilot.app.models.quotation_item import QuotationItem, ReviewStatus
 
 
 def make_task(client, name="审核导出测试") -> str:

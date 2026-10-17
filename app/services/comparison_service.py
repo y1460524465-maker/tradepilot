@@ -16,8 +16,8 @@ from enum import Enum
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from app.models.product_match import MatchStatus, ProductMatch
-from app.models.quotation_item import QuotationItem
+from tradepilot.app.models.product_match import MatchStatus, ProductMatch
+from tradepilot.app.models.quotation_item import QuotationItem
 
 _PCT = Decimal("0.01")  # 百分比保留 2 位
 
@@ -144,7 +144,7 @@ def compute_group(group: ProductMatch, items: list[QuotationItem]) -> GroupCompa
 
 
 def _norm(value: str | None) -> str | None:
-    from app.services.matching_service import norm_identity
+    from tradepilot.app.services.matching_service import norm_identity
 
     return norm_identity(value)
 

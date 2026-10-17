@@ -10,9 +10,9 @@ import uuid
 import openpyxl
 import pytest
 
-from app.ai.provider import MockProvider
-from app.models.quotation_item import ExtractionMethod, QuotationItem
-from app.schemas.quotation import QuotationItemCreate
+from tradepilot.app.ai.provider import MockProvider
+from tradepilot.app.models.quotation_item import ExtractionMethod, QuotationItem
+from tradepilot.app.schemas.quotation import QuotationItemCreate
 
 
 def make_task(client) -> str:
@@ -68,13 +68,13 @@ def test_ai_extract_disabled_by_default(client, monkeypatch):
 
 
 def test_ai_extract_with_mock_provider(client, session_factory, monkeypatch):
-    import app.core.config as config_module
+    import tradepilot.app.core.config as config_module
     monkeypatch.setattr(config_module.settings, "ai_enabled", True)
 
     task_id = make_task(client)
     upload_empty_product_xlsx(client, task_id)
 
-    import app.ai.ai_extraction_service as mod
+    import tradepilot.app.ai.ai_extraction_service as mod
     original = mod.ai_provider_module.get_provider
     monkeypatch.setattr(mod.ai_provider_module, "get_provider", lambda: MockProvider(ai_handler))
 
@@ -94,7 +94,7 @@ def Decimal_check(v):
 
 
 def test_ai_extract_idempotent_and_keeps_rule_results(client, session_factory, monkeypatch):
-    import app.core.config as config_module
+    import tradepilot.app.core.config as config_module
     monkeypatch.setattr(config_module.settings, "ai_enabled", True)
 
     task_id = make_task(client)
@@ -114,7 +114,7 @@ def test_ai_extract_idempotent_and_keeps_rule_results(client, session_factory, m
     finally:
         db.close()
 
-    import app.ai.ai_extraction_service as mod
+    import tradepilot.app.ai.ai_extraction_service as mod
     monkeypatch.setattr(mod.ai_provider_module, "get_provider", lambda: MockProvider(ai_handler))
 
     first = client.post(f"/api/v1/tasks/{task_id}/ai_extract").json()

@@ -5,9 +5,9 @@ import uuid
 from fastapi import APIRouter, Depends, Query, status
 from sqlalchemy.orm import Session
 
-from app.db.session import get_db
-from app.schemas.task import TaskCreate, TaskList, TaskRead
-from app.services.task_service import TaskService
+from tradepilot.app.db.session import get_db
+from tradepilot.app.schemas.task import TaskCreate, TaskList, TaskRead
+from tradepilot.app.services.task_service import TaskService
 
 router = APIRouter(prefix="/tasks", tags=["tasks"])
 

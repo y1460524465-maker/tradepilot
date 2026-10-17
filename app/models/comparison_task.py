@@ -7,7 +7,7 @@ from datetime import datetime
 from sqlalchemy import DateTime, Enum, String, Uuid, func
 from sqlalchemy.orm import Mapped, mapped_column
 
-from app.db.base import Base
+from tradepilot.app.db.base import Base
 
 
 class TaskStatus(str, enum.Enum):

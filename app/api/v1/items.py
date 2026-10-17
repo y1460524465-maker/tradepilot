@@ -6,11 +6,11 @@ from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
-from app.db.session import get_db
-from app.models.quotation_item import QuotationItem, ReviewStatus
-from app.schemas.extraction import ExtractSummaryRead, FileExtractionSummary
-from app.schemas.quotation import ItemList, QuotationItemRead, QuotationItemUpdate
-from app.services.extraction_service import ExtractionService
+from tradepilot.app.db.session import get_db
+from tradepilot.app.models.quotation_item import QuotationItem, ReviewStatus
+from tradepilot.app.schemas.extraction import ExtractSummaryRead, FileExtractionSummary
+from tradepilot.app.schemas.quotation import ItemList, QuotationItemRead, QuotationItemUpdate
+from tradepilot.app.services.extraction_service import ExtractionService
 
 router = APIRouter(tags=["items"])
 

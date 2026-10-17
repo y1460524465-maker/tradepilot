@@ -5,7 +5,7 @@ from datetime import datetime
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
-from app.models.comparison_task import TaskStatus
+from tradepilot.app.models.comparison_task import TaskStatus
 
 
 class TaskCreate(BaseModel):

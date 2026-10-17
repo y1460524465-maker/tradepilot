@@ -2,11 +2,11 @@
 
 from pathlib import Path
 
-from app.models.uploaded_file import FileTypeEnum
-from app.parsers.base import BaseQuotationParser, RawFileContent
-from app.parsers.csv_parser import CsvQuotationParser
-from app.parsers.excel_parser import ExcelQuotationParser
-from app.parsers.pdf_parser import PdfQuotationParser
+from tradepilot.app.models.uploaded_file import FileTypeEnum
+from tradepilot.app.parsers.base import BaseQuotationParser, RawFileContent
+from tradepilot.app.parsers.csv_parser import CsvQuotationParser
+from tradepilot.app.parsers.excel_parser import ExcelQuotationParser
+from tradepilot.app.parsers.pdf_parser import PdfQuotationParser
 
 _PARSERS: dict[FileTypeEnum, BaseQuotationParser] = {
     FileTypeEnum.XLSX: ExcelQuotationParser(),

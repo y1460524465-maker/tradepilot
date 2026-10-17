@@ -8,8 +8,8 @@ from fastapi.responses import Response
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
-from app.db.session import get_db
-from app.services.export_service import ExportService, ReviewService
+from tradepilot.app.db.session import get_db
+from tradepilot.app.services.export_service import ExportService, ReviewService
 
 router = APIRouter(tags=["review"])
 

@@ -7,7 +7,7 @@ from pathlib import Path
 
 import fitz  # PyMuPDF
 
-from app.parsers.base import BaseQuotationParser, RawFileContent, RawSheet
+from tradepilot.app.parsers.base import BaseQuotationParser, RawFileContent, RawSheet
 
 
 

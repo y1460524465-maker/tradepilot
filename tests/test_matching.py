@@ -5,10 +5,10 @@ from decimal import Decimal
 
 import pytest
 
-from app.models.product_match import MatchStatus, MatchType
-from app.models.quotation_item import QuotationItem, ReviewStatus
-from app.services.comparison_service import Comparability, compute_group
-from app.services.matching_service import is_conflict, norm_identity, similarity
+from tradepilot.app.models.product_match import MatchStatus, MatchType
+from tradepilot.app.models.quotation_item import QuotationItem, ReviewStatus
+from tradepilot.app.services.comparison_service import Comparability, compute_group
+from tradepilot.app.services.matching_service import is_conflict, norm_identity, similarity
 
 
 # ---------- 身份规范化与冲突判断 ----------
@@ -67,7 +67,7 @@ def make_task(client) -> str:
 
 
 def test_compute_group_ranking_and_diff():
-    from app.models.product_match import ProductMatch
+    from tradepilot.app.models.product_match import ProductMatch
 
     group = ProductMatch(
         task_id=uuid.uuid4(), product_name="不锈钢螺栓", model="M8x30",
@@ -90,7 +90,7 @@ def test_compute_group_ranking_and_diff():
 
 
 def test_compute_group_currency_mismatch_not_comparable():
-    from app.models.product_match import ProductMatch
+    from tradepilot.app.models.product_match import ProductMatch
 
     group = ProductMatch(
         task_id=uuid.uuid4(), product_name="螺栓",
@@ -105,7 +105,7 @@ def test_compute_group_currency_mismatch_not_comparable():
 
 
 def test_compute_group_missing_price_blocks():
-    from app.models.product_match import ProductMatch
+    from tradepilot.app.models.product_match import ProductMatch
 
     group = ProductMatch(
         task_id=uuid.uuid4(), product_name="螺栓",

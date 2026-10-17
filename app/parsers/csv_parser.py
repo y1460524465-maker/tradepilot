@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from app.parsers.base import BaseQuotationParser, RawFileContent, RawSheet
+from tradepilot.app.parsers.base import BaseQuotationParser, RawFileContent, RawSheet
 
 ENCODINGS = ("utf-8-sig", "gbk", "latin-1")
 

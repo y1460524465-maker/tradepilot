@@ -7,15 +7,15 @@ from fastapi.responses import FileResponse
 from pathlib import Path
 from sqlalchemy.orm import Session
 
-from app.db.session import get_db
-from app.schemas.file import (
+from tradepilot.app.db.session import get_db
+from tradepilot.app.schemas.file import (
     FileDetail,
     FileList,
     FileParseResult,
     FileRead,
     ParseSummary,
 )
-from app.services.file_service import FileService
+from tradepilot.app.services.file_service import FileService
 
 router = APIRouter(tags=["files"])
 

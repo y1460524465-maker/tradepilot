@@ -5,7 +5,7 @@ import uuid
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
-from app.models.comparison_task import ComparisonTask, TaskStatus
+from tradepilot.app.models.comparison_task import ComparisonTask, TaskStatus
 
 
 class TaskRepository:

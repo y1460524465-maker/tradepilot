@@ -14,10 +14,10 @@ from openpyxl.utils import get_column_letter
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from app.models.comparison_task import ComparisonTask, TaskStatus
-from app.models.quotation_item import QuotationItem, ReviewStatus
-from app.models.product_match import ProductMatch
-from app.services.comparison_service import Comparability, compute_task
+from tradepilot.app.models.comparison_task import ComparisonTask, TaskStatus
+from tradepilot.app.models.quotation_item import QuotationItem, ReviewStatus
+from tradepilot.app.models.product_match import ProductMatch
+from tradepilot.app.services.comparison_service import Comparability, compute_task
 
 _HEADER_FILL = PatternFill("solid", fgColor="1F4E78")
 _HEADER_FONT = Font(color="FFFFFF", bold=True)

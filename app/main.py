@@ -1,6 +1,7 @@
 """TradePilot 应用入口。
 
-启动：uvicorn app.main:app --reload
+启动（在工作区根目录 E:\\TradePilot(workbdy) 下执行）：
+    tradepilot\\.venv\\Scripts\\python -m uvicorn tradepilot.app.main:app --reload
 """
 
 from pathlib import Path
@@ -9,8 +10,8 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from starlette.responses import Response
 
-from app.api.v1 import ai, files, health, items, matching, review, tasks
-from app.core.config import settings
+from tradepilot.app.api.v1 import ai, files, health, items, matching, review, tasks
+from tradepilot.app.core.config import settings
 
 app = FastAPI(
     title=settings.app_name,

@@ -12,12 +12,12 @@ from sqlalchemy import engine_from_config, pool
 
 from alembic import context
 
-# 保证 alembic 命令在项目根目录之外的调用方式也能导入 app 包
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# 保证 alembic 命令在任何 cwd 调用时都能导入 tradepilot 包（需工作区根目录在 sys.path）
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
-from app.core.config import settings  # noqa: E402
-from app.db.base import Base  # noqa: E402
-import app.models  # noqa: E402,F401  确保所有模型注册到 Base.metadata
+from tradepilot.app.core.config import settings  # noqa: E402
+from tradepilot.app.db.base import Base  # noqa: E402
+import tradepilot.app.models  # noqa: E402,F401  确保所有模型注册到 Base.metadata
 
 config = context.config
 

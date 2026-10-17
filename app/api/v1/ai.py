@@ -5,10 +5,10 @@ import uuid
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
-from app.ai.ai_extraction_service import AIExtractionService
-from app.db.session import get_db
-from app.models.comparison_task import ComparisonTask
-from app.schemas.extraction import ExtractSummaryRead, FileExtractionSummary
+from tradepilot.app.ai.ai_extraction_service import AIExtractionService
+from tradepilot.app.db.session import get_db
+from tradepilot.app.models.comparison_task import ComparisonTask
+from tradepilot.app.schemas.extraction import ExtractSummaryRead, FileExtractionSummary
 
 router = APIRouter(tags=["ai"])
 
