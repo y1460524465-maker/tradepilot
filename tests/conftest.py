@@ -7,7 +7,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import StaticPool
 
 import app.core.config as config_module
-from app.core.config import Settings
+
 from app.db.base import Base
 from app.db.session import get_db
 from app.main import app
@@ -30,8 +30,10 @@ def session_factory(tmp_path, monkeypatch):
         finally:
             db.close()
 
-    test_settings = Settings(storage_dir=str(tmp_path))
-    monkeypatch.setattr(config_module, "settings", test_settings)
+    # 原地修改单例属性（不要替换对象引用：各服务模块 import 的是旧引用）
+    cfg = config_module.settings
+    monkeypatch.setattr(cfg, "storage_dir", str(tmp_path), raising=False)
+    monkeypatch.setattr(cfg, "max_upload_size_mb", 1, raising=False)
     app.dependency_overrides[get_db] = override_get_db
     yield TestingSession
     app.dependency_overrides.clear()

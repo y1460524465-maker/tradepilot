@@ -26,5 +26,13 @@ class Settings(BaseSettings):
     max_upload_size_mb: int = 20      # 单文件上限（TRD 6.3 示例值）
     max_files_per_task: int = 20      # 单任务文件数上限
 
+    # 阶段六：大模型辅助提取（TRD 第九章；AI 只辅助不决策）
+    ai_enabled: bool = False          # 总开关：默认关闭，真实企业数据未经授权不出第三方 API
+    ai_base_url: str = "https://api.deepseek.com/v1"
+    ai_api_key: str = ""              # 走 .env，不进代码
+    ai_model: str = "deepseek-chat"
+    ai_timeout_seconds: int = 60
+    ai_max_text_chars: int = 12000    # 送入模型的文本上限（截断保护）
+
 
 settings = Settings()
